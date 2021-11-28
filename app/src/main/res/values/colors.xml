@@ -5,6 +5,7 @@
     <color name="sec_blue">#FF9ECCFF</color>
     <color name="text_main">#FFF5F5FF</color>
     <color name="background">#212121</color>
+    <color name="header_gray">#FF666666</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

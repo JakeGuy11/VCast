@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.json.*;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString((int) R.color.pri_blue))));
 
         // Testing some file rw
-        TextView mainLabel = (TextView) findViewById(R.id.main_text);
+        //TextView mainLabel = (TextView) findViewById(R.id.main_text);
+        /*Textview mainLabel = null;
         if (saveDataToFS(getApplicationContext(), "info.json", "based shit"))
         {
             String savedStr = getDataFromFS(getApplicationContext(), "info.json");
@@ -44,7 +46,15 @@ public class MainActivity extends AppCompatActivity
         else
         {
             mainLabel.setText("Failed, sadge");
-        }
+        }*/
+    }
+
+    // Check if a file exists
+    public boolean fileExists(Context context, String fileName)
+    {
+        String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
+        File file = new File(path);
+        return file.exists();
     }
 
     // Read the JSON to a String
