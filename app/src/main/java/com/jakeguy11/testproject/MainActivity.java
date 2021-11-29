@@ -7,14 +7,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 
 import org.json.*;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,21 +32,25 @@ public class MainActivity extends AppCompatActivity
 
         // Configure the action bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("VCast");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString((int) R.color.pri_blue))));
-
-        // Testing some file rw
-        //TextView mainLabel = (TextView) findViewById(R.id.main_text);
-        /*Textview mainLabel = null;
-        if (saveDataToFS(getApplicationContext(), "info.json", "based shit"))
+        if (actionBar != null)
         {
-            String savedStr = getDataFromFS(getApplicationContext(), "info.json");
-            mainLabel.setText(savedStr);
+            actionBar.setTitle("Your Channels");
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString((int) R.color.pri_blue))));
         }
-        else
-        {
-            mainLabel.setText("Failed, sadge");
-        }*/
+
+        // For testing below here
+        // Inject the dummy entry
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
     }
 
     // Check if a file exists
@@ -76,7 +80,6 @@ public class MainActivity extends AppCompatActivity
             return builder.toString();
         }
         // If there are any errors, return null
-        catch (FileNotFoundException e) { return null; }
         catch (IOException e) { return null; }
     }
 
@@ -93,7 +96,6 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         // If there are any errors, return false
-        catch (FileNotFoundException e) { return false; }
-        catch (IOException ioException) { return false; }
+        catch (IOException e) { return false; }
     }
 }
