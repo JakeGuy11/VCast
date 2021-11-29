@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.json.*;
 
@@ -17,7 +21,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity
@@ -42,15 +48,33 @@ public class MainActivity extends AppCompatActivity
         // Inject the dummy entry
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
-        ((LinearLayout) findViewById(R.id.live_content_container)).addView(inflater.inflate(R.layout.entry, null));
+        String[][] members = {{"Polka", "https://vignette.wikia.nocookie.net/virtualyoutuber/images/3/33/Omaru_Polka_Portrait.png/revision/latest?cb=20200807015145"}, {"Towa", "https://static.wikia.nocookie.net/virtualyoutuber/images/3/35/Tokoyami_Towa_-_Portrait.png/revision/latest?cb=20200126194247"}, {"Suisei", "https://static.wikia.nocookie.net/virtualyoutuber/images/8/8b/Hoshimachi_Suisei_2019_Portrait.png/revision/latest?cb=20191205132210"}, {"Mori", "https://static.wikia.nocookie.net/virtualyoutuber/images/3/39/Mori_Calliope_Portrait.png/revision/latest?cb=20200910193007"}};
+
+        for(String[] currentMem : members)
+        {
+            // Create the view, edit the properties
+            android.view.View viewToAdd = inflater.inflate(R.layout.entry, null);
+            ((ImageView) viewToAdd.findViewById(R.id.sample_image)).setImageDrawable(loadImageFromWeb(currentMem[1]));
+            ((TextView) viewToAdd.findViewById(R.id.sample_text)).setText(currentMem[0]);
+
+            // Add the view
+            ((LinearLayout) findViewById(R.id.live_content_container)).addView(viewToAdd);
+        }
+    }
+
+    // Turn a URL into a drawable image
+    public static Drawable loadImageFromWeb(String url)
+    {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        try
+        {
+            InputStream loadStream = (InputStream) new URL(url).getContent();
+            System.out.println("Loaded image!");
+            return Drawable.createFromStream(loadStream, null);
+        }
+        catch (Exception e) { System.out.println("Image not loaded: " + e); return null; }
     }
 
     // Check if a file exists
