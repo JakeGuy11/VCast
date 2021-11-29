@@ -1,4 +1,4 @@
-package com.jakeguy11.testproject;
+package com.jakeguy11.VCast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
