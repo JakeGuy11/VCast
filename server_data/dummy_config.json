@@ -1,0 +1,44 @@
+{
+  "last_updated": "1638198906",
+  "added_channels":
+  {
+    "polka":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "apex",
+        "sing"
+      ]
+    },
+    "towa":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "apex",
+        "karaoke"
+      ]
+    },
+    "suisei":
+    {
+      "priority":false,
+      "notif_flags":
+      [
+        "tetris",
+        "karaoke"
+      ]
+    },
+    "mori":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
+    }
+  }
+}
