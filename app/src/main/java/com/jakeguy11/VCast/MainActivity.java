@@ -27,12 +27,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity
 {
 
     // Some Strings we'll need
-    private String configFilePath = "";
+    private String configFilePath = "preferences.json";
     private String remoteJsonUrl = "https://raw.githubusercontent.com/JakeGuy11/VCast/main/server_data/dummy_config.json";
 
     // Do all the initialization stuff
@@ -50,19 +51,48 @@ public class MainActivity extends AppCompatActivity
             actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString((int) R.color.pri_blue))));
         }
 
-        // Test out the getFileContentFromURL
-        String res = getFileContentFromURL(remoteJsonUrl);
-        System.out.println("Printing response:");
-        System.out.println(res);
-
-        // Check if the user has a config - if they don't, download it
+        // Check if the user has a preference JSON - if they don't, download it.
+        // Also make sure to store it to a String so we can JSONify it
+        String cfg = "";
         if (!fileExists(getApplicationContext(), configFilePath))
         {
             // Download the file
+            cfg = getFileContentFromURL(remoteJsonUrl);
+            if (!saveDataToFS(getApplicationContext(), configFilePath, cfg))
+            {
+                // Failed to write it for some reason!
+                System.out.println("FAILED TO WRITE DOWNLOADED CFG TO FILESYSTEM");
+            }
+        }
+        else
+        {
+            // The file exists - read it into a string
+            cfg = getDataFromFS(getApplicationContext(), configFilePath);
+            if (cfg == null) { System.out.println("FAILED TO READ TO FS"); cfg = "{}";/* eventually, we will set a default, hardcoded cfg here */ }
+        }
 
+        // Now JSONify the preferences file
+        try {
+            JSONObject pref = new JSONObject(cfg).getJSONObject("added_channels");
+            Iterator<String> addedChannelStrings = pref.keys();
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            // Iterate through the added channels, add their entries to the layout
+            while (addedChannelStrings.hasNext())
+            {
+                // Get the current string
+                String currentChannelName = addedChannelStrings.next();
+
+                // Add the name to an entry, add it to the layout
+                android.view.View viewToAdd = inflater.inflate(R.layout.entry, null);
+                ((TextView) viewToAdd.findViewById(R.id.sample_text)).setText(currentChannelName);
+                ((LinearLayout) findViewById(R.id.live_content_container)).addView(viewToAdd);
+            }
+        } catch (JSONException e) {
+            System.out.println("FAILED TO PARSE JSON: " + e);
         }
     }
 
+    // Get the contents of a url as a string
     public static String getFileContentFromURL(String providedUrl)
     {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
