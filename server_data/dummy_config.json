@@ -39,6 +39,69 @@
         "minecraft",
         "karaoke"
       ]
+    },
+    "kiara":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
+    },
+    "ina":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
+    },
+    "baelz":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
+    },
+    "mumei":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
+    },
+    "okayu":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
+    },
+    "botan":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
+    },
+    "nene":
+    {
+      "priority":true,
+      "notif_flags":
+      [
+        "minecraft",
+        "karaoke"
+      ]
     }
   }
 }
