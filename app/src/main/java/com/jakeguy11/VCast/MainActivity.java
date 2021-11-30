@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     // Some Strings we'll need
     private String configFilePath = "preferences.json";
-    private String remoteJsonUrl = "https://raw.githubusercontent.com/JakeGuy11/VCast/main/server_data/dummy_config.json";
+    private String remoteJsonUrl = "https://raw.githubusercontent.com/JakeGuy11/vcast-data/main/presets/HLV/preferences.json";
 
     // Do all the initialization stuff
     @Override
@@ -178,6 +178,11 @@ public class MainActivity extends AppCompatActivity
     {
         try
         {
+            // Create the file's directories
+            File outFile = new File(fileName);
+            if (!outFile.getParentFile().mkdirs()) throw new IOException();
+            outFile.createNewFile();
+
             // Get the file
             FileOutputStream outStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
 
